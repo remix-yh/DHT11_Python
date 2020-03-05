@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import dht11
 import time
 import datetime
+from elasticsearch import Elasticsearch
 
 # initialize GPIO
 GPIO.setwarnings(True)
@@ -11,6 +12,8 @@ GPIO.setmode(GPIO.BCM)
 instance = dht11.DHT11(pin=14)
 
 try:
+	# cloud_id,http_authには、個々の認証情報を設定すること
+	es = Elasticsearch(cloud_id='XXX', http_auth=('elastic','YYY'))
 	while True:
 	    result = instance.read()
 	    if result.is_valid():
@@ -18,6 +21,7 @@ try:
 
 	        print("Temperature: %-3.1f C" % result.temperature)
 	        print("Humidity: %-3.1f %%" % result.humidity)
+			es.index(index="environment_monitor", body={"date_time":datetime.datetime.utcnow(),"temperature": result.temperature,"humidity":result.humidity})
 
 	    time.sleep(6)
 
