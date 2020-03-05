@@ -21,7 +21,7 @@ try:
 
 	        print("Temperature: %-3.1f C" % result.temperature)
 	        print("Humidity: %-3.1f %%" % result.humidity)
-			es.index(index="environment_monitor", body={"date_time":datetime.datetime.utcnow(),"temperature": result.temperature,"humidity":result.humidity})
+	        es.index(index="environment_monitor", body={"date_time":datetime.datetime.utcnow(),"temperature": result.temperature,"humidity":result.humidity})
 
 	    time.sleep(6)
 
