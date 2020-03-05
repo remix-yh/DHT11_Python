@@ -12,7 +12,7 @@ GPIO.setmode(GPIO.BCM)
 instance = dht11.DHT11(pin=14)
 
 try:
-	# cloud_id,http_authには、個々の認証情報を設定すること
+	# Please set indivisual credentials of cloud_id and http_auth
 	es = Elasticsearch(cloud_id='XXX', http_auth=('elastic','YYY'))
 	while True:
 	    result = instance.read()
